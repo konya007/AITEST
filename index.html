@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Đọc Markdown</title>
+    
+    <!-- Sử dụng marked.js để chuyển đổi Markdown sang HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Highlight.js để hiển thị code với syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    
+    <!-- MathJax để hiển thị công thức toán học - đặt sau để đảm bảo loading order -->
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        },
+        startup: {
+            ready: function() {
+                console.log('MathJax đã sẵn sàng');
+                MathJax.startup.defaultReady();
+            }
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+            background-color: #f8f9fa;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tab:hover {
+            background-color: #e9ecef;
+        }
+        .tab.active {
+            background-color: #4285f4;
+            color: white;
+            border-color: #4285f4;
+        }
+        .content {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: auto;
+            min-height: 500px;
+            position: relative;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .theme-toggle {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #loadingIndicator {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4285f4;
+            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #toc {
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            width: 250px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateX(270px);
+            transition: transform 0.3s;
+            z-index: 100;
+        }
+        #toc.visible {
+            transform: translateX(0);
+        }
+        #tocButton {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            z-index: 101;
+        }
+        #toc ul {
+            list-style-type: none;
+            padding-left: 15px;
+        }
+        #toc li {
+            margin: 8px 0;
+        }
+        #toc a {
+            color: #333;
+            text-decoration: none;
+        }
+        #toc a:hover {
+            text-decoration: underline;
+            color: #4285f4;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #1a0dab;
+        }
+        h1 {
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 0.3em;
+        }
+        pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f6f8fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 16px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .math {
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        /* Dark theme */
+        body.dark-theme {
+            background-color: #222;
+            color: #eee;
+        }
+        body.dark-theme .tab {
+            background-color: #333;
+            color: #eee;
+        }
+        body.dark-theme .tab:hover {
+            background-color: #444;
+        }
+        body.dark-theme .tab.active {
+            background-color: #0056b3;
+        }
+        body.dark-theme .content {
+            background-color: #333;
+            border-color: #444;
+            color: #eee;
+        }
+        body.dark-theme h1, body.dark-theme h2, body.dark-theme h3, 
+        body.dark-theme h4, body.dark-theme h5, body.dark-theme h6 {
+            color: #88b0ff;
+        }
+        body.dark-theme pre, body.dark-theme code {
+            background-color: #444;
+            color: #eee;
+        }
+        body.dark-theme table, body.dark-theme th, body.dark-theme td {
+            border-color: #555;
+        }
+        body.dark-theme th {
+            background-color: #444;
+        }
+        body.dark-theme #toc {
+            background-color: #333;
+            border-color: #444;
+        }
+        body.dark-theme #toc a {
+            color: #eee;
+        }
+        body.dark-theme .theme-toggle {
+            background-color: #333;
+            color: #eee;
+            border-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <h1>Trình Đọc Markdown</h1>
+            <button id="themeToggle" class="theme-toggle">Chế độ tối</button>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-file="AI1.MD">AI1.MD</div>
+            <div class="tab" data-file="AI2.MD">AI2.MD</div>
+            <div class="tab" data-file="AI3_DL1.MD">AI3_DL1.MD</div>
+            <div class="tab" data-file="AI4_DL2.MD">AI4_DL2.MD</div>
+        </div>
+        
+        <div id="loadingIndicator">Đang tải...</div>
+        
+        <div id="markdown-content" class="content">
+            <p>Đang tải nội dung...</p>
+        </div>
+    </div>
+    
+    <button id="tocButton">Mục lục</button>
+    <div id="toc"></div>
+
+    <script>
+        // Các phần tử DOM
+        const contentDiv = document.getElementById('markdown-content');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const themeToggle = document.getElementById('themeToggle');
+        const tabs = document.querySelectorAll('.tab');
+        const tocButton = document.getElementById('tocButton');
+        const toc = document.getElementById('toc');
+
+        // Trạng thái hiện tại
+        let currentFile = 'AI1.MD';
+        let tocVisible = false;
+
+        // Xử lý toggle theme
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') 
+                ? 'Chế độ sáng' 
+                : 'Chế độ tối';
+        });
+
+        // Xử lý toggle mục lục
+        tocButton.addEventListener('click', () => {
+            tocVisible = !tocVisible;
+            toc.classList.toggle('visible', tocVisible);
+            tocButton.textContent = tocVisible ? 'Ẩn mục lục' : 'Mục lục';
+        });
+
+        // Xử lý chuyển tab
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const fileToLoad = tab.getAttribute('data-file');
+                if (fileToLoad !== currentFile) {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentFile = fileToLoad;
+                    loadMarkdownFile(fileToLoad);
+                }
+            });
+        });
+
+        // Hàm tải và hiển thị file markdown
+        function loadMarkdownFile(filename) {
+            loadingIndicator.style.display = 'block';
+            fetch(filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Không thể tải file');
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    renderMarkdown(content);
+                })
+                .catch(error => {
+                    contentDiv.innerHTML = `<p style="color: red;">Lỗi: ${error.message}</p>`;
+                })
+                .finally(() => {
+                    loadingIndicator.style.display = 'none';
+                });
+        }
+
+        // Tạo mục lục từ nội dung HTML đã render
+        function generateTableOfContents() {
+            const headings = contentDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            const tocContent = document.createElement('div');
+            tocContent.innerHTML = '<h3>Mục lục</h3>';
+            
+            if (headings.length === 0) {
+                tocContent.innerHTML += '<p>Không có tiêu đề nào.</p>';
+                toc.innerHTML = tocContent.innerHTML;
+                return;
+            }
+            
+            const ul = document.createElement('ul');
+            const stack = [{ level: 0, element: ul }];
+            
+            headings.forEach((heading, index) => {
+                // Lấy cấp độ tiêu đề (1 cho h1, 2 cho h2, etc.)
+                const level = parseInt(heading.tagName.charAt(1));
+                
+                // Tạo ID nếu chưa có
+                if (!heading.id) {
+                    heading.id = 'heading-' + index;
+                }
+                
+                // Tạo phần tử mục lục
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = heading.textContent;
+                a.href = '#' + heading.id;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    heading.scrollIntoView({ behavior: 'smooth' });
+                });
+                li.appendChild(a);
+                
+                // Quản lý cấu trúc lồng nhau
+                while (level <= stack[stack.length - 1].level) {
+                    stack.pop();
+                }
+                
+                if (level > stack[stack.length - 1].level) {
+                    const newUl = document.createElement('ul');
+                    stack[stack.length - 1].element.appendChild(newUl);
+                    stack.push({ level: level, element: newUl });
+                }
+                
+                stack[stack.length - 1].element.appendChild(li);
+            });
+            
+            tocContent.appendChild(ul);
+            toc.innerHTML = tocContent.innerHTML;
+        }
+
+        // Render Markdown thành HTML và hiển thị
+        function renderMarkdown(markdownContent) {
+            // Xử lý các đường dẫn filepath trong code blocks
+            markdownContent = markdownContent.replace(/```md\s*\/\/ filepath:.+?\n/g, '```md\n');
+            
+            // Xử lý một số trường hợp đặc biệt khác
+            markdownContent = markdownContent
+                .replace(/\*\(Đánh dấu để bổ sung/g, '**(Đánh dấu để bổ sung')
+                .replace(/\*\(Mô tả:/g, '**(Mô tả:')
+                .replace(/\*\(Chú thích/g, '**(Chú thích');
+                
+            // Chuyển đổi Markdown sang HTML
+            const htmlContent = marked.parse(markdownContent);
+            
+            // Hiển thị nội dung
+            contentDiv.innerHTML = htmlContent;
+            
+            // Tạo mục lục
+            generateTableOfContents();
+            
+            // Áp dụng syntax highlighting cho các code blocks
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+            
+            // Render lại các công thức toán học - cải tiến cách xử lý
+            renderMathJax();
+        }
+
+        // Hàm mới để xử lý MathJax
+        function renderMathJax() {
+            // Đợi tối đa 30 giây để MathJax khởi tạo
+            let attempts = 0;
+            const maxAttempts = 30;
+            
+            function tryTypeset() {
+                attempts++;
+                
+                if (attempts > maxAttempts) {
+                    console.error('Không thể khởi tạo MathJax sau nhiều lần thử');
+                    return;
+                }
+                
+                if (!window.MathJax) {
+                    console.log(`Đang đợi MathJax tải (lần thử ${attempts})`);
+                    setTimeout(tryTypeset, 1000);
+                    return;
+                }
+                
+                if (!window.MathJax.typesetPromise) {
+                    console.log(`MathJax đã tải nhưng typesetPromise chưa sẵn sàng (lần thử ${attempts})`);
+                    setTimeout(tryTypeset, 1000);
+                    return;
+                }
+                
+                try {
+                    console.log('Bắt đầu render MathJax');
+                    
+                    // Thêm đoạn này để đảm bảo các công thức được nhận dạng
+                    document.querySelectorAll('.content p, .content li').forEach(el => {
+                        const text = el.innerHTML;
+                        if (text.includes('$') || text.includes('\\(') || text.includes('\\[')) {
+                            el.classList.add('has-math');
+                        }
+                    });
+                    
+                    // Render toán học
+                    window.MathJax.typesetPromise([contentDiv])
+                        .then(() => {
+                            console.log('MathJax render thành công');
+                        })
+                        .catch(err => {
+                            console.error('Lỗi khi render MathJax:', err);
+                            // Thử phương pháp khác nếu cách đầu không hoạt động
+                            if (window.MathJax.typeset) {
+                                try {
+                                    window.MathJax.typeset([contentDiv]);
+                                    console.log('MathJax render thành công (phương pháp dự phòng)');
+                                } catch (fallbackErr) {
+                                    console.error('Lỗi khi render MathJax (phương pháp dự phòng):', fallbackErr);
+                                }
+                            }
+                        });
+                } catch (err) {
+                    console.error('Lỗi không xác định khi xử lý MathJax:', err);
+                }
+            }
+            
+            // Bắt đầu thử render
+            tryTypeset();
+        }
+
+        // Tự động tải file đầu tiên khi trang được tải
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMarkdownFile(currentFile);
+        });
+    </script>
+</body>
+</html>
