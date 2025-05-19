@@ -109,7 +109,7 @@ Cách hiệu quả nhất để xử lý khả năng quan sát một phần là 
 
 Việc cập nhật thông tin trạng thái nội bộ này theo thời gian đòi hỏi hai loại kiến thức phải được mã hóa trong chương trình tác nhân. Thứ nhất, chúng ta cần một số thông tin về cách thế giới tự tiến triển độc lập với tác nhân—ví dụ, một chiếc xe vượt nói chung sẽ ở gần phía sau hơn so với một khoảnh khắc trước đó. Thứ hai, chúng ta cần một số thông tin về cách hành động của chính tác nhân ảnh hưởng đến thế giới—ví dụ, khi tác nhân xoay vô lăng theo chiều kim đồng hồ, xe rẽ sang phải, hoặc sau khi lái xe năm phút về phía bắc trên đường cao tốc, người ta thường ở cách vị trí năm phút trước đó khoảng năm dặm về phía bắc. Kiến thức này về "cách thế giới hoạt động"—cho dù được triển khai trong các mạch Boolean đơn giản hay trong các lý thuyết khoa học hoàn chỉnh—được gọi là **mô hình (model)** của thế giới. Một tác nhân sử dụng một mô hình như vậy được gọi là **tác nhân dựa trên mô hình (model-based agent)**.
 
-![alt text](j2.11.png)
+![alt text](h2.11.png)
 
 **Hình 2.11** Một tác nhân phản xạ dựa trên mô hình.
 *(Mô tả: Tương tự như Hình 2.9, nhưng trong Tác nhân, có một hộp "Trạng thái (State)". Mũi tên từ "Trạng thái" đến "Thế giới tiến hóa như thế nào (How the world evolves)" và "Hành động của tôi làm gì (What my actions do)". Mũi tên từ "Thế giới tiến hóa như thế nào" và "Hành động của tôi làm gì" trỏ đến một điểm, từ đó mũi tên đi đến hộp "Thế giới bây giờ như thế nào". Cũng có một mũi tên nét đứt từ "Trạng thái" đến "Thế giới bây giờ như thế nào".)*
