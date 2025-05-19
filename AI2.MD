@@ -1,4 +1,3 @@
-Tuyệt vời! Dưới đây là bản dịch và trình bày Markdown của tài liệu "ARTIFICIAL INTELLIGENCE 2":
 
 # TRÍ TUỆ NHÂN TẠO 2
 LE QUANG MINH

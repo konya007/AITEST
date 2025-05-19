@@ -1,4 +1,3 @@
-Tuyệt vời, đây là bản dịch và trình bày Markdown cho tài liệu "DEEP LEARNING AND NEURAL NETWORKS":
 
 # HỌC SÂU VÀ MẠNG NƠ-RON (DEEP LEARNING AND NEURAL NETWORKS)
 MINH QUANG LE
