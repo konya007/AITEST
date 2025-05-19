@@ -1,0 +1,171 @@
+/* Main stylesheet - If you see this comment in dev tools, the CSS was loaded correctly */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0 auto;
+  padding: 10px; /* Bootstrap might add its own body padding, adjust if needed */
+  transition: background-color 0.3s, color 0.3s;
+  overflow-x: hidden;
+  background-color: #ffffff; /* Explicitly set background color */
+}
+
+/* Test selector to verify CSS loading */
+.check-styles-loaded {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Dark theme styling for Bootstrap components */
+body.dark-theme {
+  background-color: #222;
+  color: #eee;
+}
+
+body.dark-theme .navbar {
+  background-color: #333 !important;
+}
+
+body.dark-theme .navbar-brand,
+body.dark-theme .nav-link {
+  color: #eee !important;
+}
+
+body.dark-theme .card {
+  background-color: #333;
+  border-color: #444;
+}
+
+body.dark-theme .nav-tabs {
+  border-color: #444;
+}
+
+body.dark-theme .nav-tabs .nav-link.active {
+  background-color: #333;
+  color: #fff;
+  border-color: #444 #444 #333;
+}
+
+body.dark-theme .nav-link {
+  color: #aaa;
+}
+
+body.dark-theme #toc {
+  background-color: #333 !important;
+  color: #eee;
+}
+
+body.dark-theme #tocButton {
+  background-color: #444;
+  border-color: #555;
+  color: #fff;
+}
+
+body.dark-theme .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* TOC styling */
+#toc {
+  transition: right 0.3s ease;
+}
+
+#toc.visible {
+  right: 0;
+}
+
+#tocButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* --- KaTeX Styling Adjustments --- */
+
+/* General KaTeX styling */
+.katex {
+  font-size: 1.1em; /* Default size adjustment */
+  display: inline-block; /* Helps treat inline math as a single unit */
+  vertical-align: middle; /* Better alignment for inline math with text */
+  text-align: initial; /* Ensure KaTeX internal alignment isn't overridden globally */
+}
+
+/* KaTeX internal rendering container - crucial for preventing breaks within formulas */
+.katex-html {
+  white-space: nowrap !important; /* Prevent the actual math symbols/parts from wrapping */
+  /* The problematic rule below is removed: */
+  /* display: flex; flex-wrap: wrap; */ 
+}
+
+/* Styling for display math ($$ ... $$) blocks */
+.katex-display {
+  overflow-x: auto; /* Allow horizontal scrolling for long equations */
+  overflow-y: hidden;
+  padding: 0.5em 0;
+  max-width: 100%; /* The block itself should not exceed its container's width */
+  margin: 1em 0 !important;
+  text-align: center; /* Common practice to center display math */
+}
+
+/* The KaTeX content when it's part of a display block */
+.katex-display .katex {
+  /* display: inline-block; */ /* Already set by general .katex rule */
+  text-align: initial; /* Reset text-align for the formula content itself if parent is centered */
+  /* vertical-align: middle; */ /* Not particularly relevant for display math's inner .katex */
+  white-space: nowrap; /* Ensure the formula itself doesn't break (also covered by .katex-html) */
+}
+
+
+/* Tối ưu cho điện thoại - Keep existing mobile optimizations */
+@media (max-width: 768px) {
+  /* .katex-display { font-size: 0.9em; } */ /* This would shrink the scrollable container text */
+  .katex { /* Shrink all KaTeX rendered math */
+    font-size: 0.9em; 
+  }
+}
+
+/* Cải thiện hiển thị cho KaTeX - some rules might be redundant now or adjusted above */
+/* .katex-display { */ /* Already defined above */
+  /* overflow-x: auto; */
+  /* overflow-y: hidden; */
+  /* padding: 0.5em 0; */
+  /* margin: 1em 0 !important; */
+/* } */
+
+/* .katex { */ /* Already defined above */
+  /* font-size: 1.1em; */
+/* } */
+
+.math-container {
+  position: relative;
+  margin: 1em 0;
+  padding: 0.5em;
+  border-radius: 4px;
+  background-color: rgba(240, 240, 240, 0.3);
+  /* If math-container directly wraps KaTeX output that might overflow, add overflow-x: auto */
+  /* overflow-x: auto; */ 
+}
+
+/* Chế độ tối cho công thức toán */
+body.dark-theme .math-container {
+  background-color: rgba(60, 60, 60, 0.3);
+}
+
+body.dark-theme .katex {
+  color: #e0e0e0;
+}
+
+/* Điều chỉnh kích thước công thức trên di động - already handled by the .katex rule in media query */
+/* @media (max-width: 768px) { */
+  /* .katex { */
+    /* font-size: 0.9em; */
+  /* } */
+/* } */
+/* } */
