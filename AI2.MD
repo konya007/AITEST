@@ -61,7 +61,7 @@ Con người cũng có nhiều kết nối như vậy, một số là phản ứ
 
 Chương trình trong Hình 2.8 (không được cung cấp trong OCR) dành riêng cho một môi trường máy hút bụi cụ thể. Một cách tiếp cận tổng quát và linh hoạt hơn là trước tiên xây dựng một bộ thông dịch đa năng cho các quy tắc điều kiện-hành động và sau đó tạo các bộ quy tắc cho các môi trường tác vụ cụ thể. Hình 2.9 (xem bên dưới) đưa ra cấu trúc của chương trình tổng quát này ở dạng sơ đồ, cho thấy cách các quy tắc điều kiện-hành động (hoạt động).
 
-*(Đánh dấu để bổ sung Hình 2.8: Chương trình tác nhân cho một tác nhân phản xạ đơn giản trong môi trường máy hút bụi hai trạng thái. Chương trình này thực hiện hàm tác nhân được lập bảng trong Hình 2.3 (không được cung cấp trong OCR).)*
+
 
 ```
 function REFLEX-VACUUM-AGENT([location,status]) returns an action
@@ -69,9 +69,14 @@ function REFLEX-VACUUM-AGENT([location,status]) returns an action
     else if location = A then return Right
     else if location = B then return Left
 ```
+
+
+
 **Hình 2.8** Chương trình tác nhân cho một tác nhân phản xạ đơn giản trong môi trường máy hút bụi hai trạng thái. Chương trình này thực hiện hàm tác nhân được lập bảng trong Hình 2.3 (không được cung cấp trong OCR).
 
 ---
+
+![alt text](h2.9.png)
 
 *(Đánh dấu để bổ sung Hình 2.9: Sơ đồ của một tác nhân phản xạ đơn giản.)*
 **Hình 2.9** Sơ đồ của một tác nhân phản xạ đơn giản.
@@ -104,7 +109,8 @@ Cách hiệu quả nhất để xử lý khả năng quan sát một phần là 
 
 Việc cập nhật thông tin trạng thái nội bộ này theo thời gian đòi hỏi hai loại kiến thức phải được mã hóa trong chương trình tác nhân. Thứ nhất, chúng ta cần một số thông tin về cách thế giới tự tiến triển độc lập với tác nhân—ví dụ, một chiếc xe vượt nói chung sẽ ở gần phía sau hơn so với một khoảnh khắc trước đó. Thứ hai, chúng ta cần một số thông tin về cách hành động của chính tác nhân ảnh hưởng đến thế giới—ví dụ, khi tác nhân xoay vô lăng theo chiều kim đồng hồ, xe rẽ sang phải, hoặc sau khi lái xe năm phút về phía bắc trên đường cao tốc, người ta thường ở cách vị trí năm phút trước đó khoảng năm dặm về phía bắc. Kiến thức này về "cách thế giới hoạt động"—cho dù được triển khai trong các mạch Boolean đơn giản hay trong các lý thuyết khoa học hoàn chỉnh—được gọi là **mô hình (model)** của thế giới. Một tác nhân sử dụng một mô hình như vậy được gọi là **tác nhân dựa trên mô hình (model-based agent)**.
 
-*(Đánh dấu để bổ sung Hình 2.11: Cấu trúc của tác nhân phản xạ dựa trên mô hình với trạng thái nội bộ.)*
+![alt text](j2.11.png)
+
 **Hình 2.11** Một tác nhân phản xạ dựa trên mô hình.
 *(Mô tả: Tương tự như Hình 2.9, nhưng trong Tác nhân, có một hộp "Trạng thái (State)". Mũi tên từ "Trạng thái" đến "Thế giới tiến hóa như thế nào (How the world evolves)" và "Hành động của tôi làm gì (What my actions do)". Mũi tên từ "Thế giới tiến hóa như thế nào" và "Hành động của tôi làm gì" trỏ đến một điểm, từ đó mũi tên đi đến hộp "Thế giới bây giờ như thế nào". Cũng có một mũi tên nét đứt từ "Trạng thái" đến "Thế giới bây giờ như thế nào".)*
 
@@ -124,6 +130,8 @@ function MODEL-BASED-REFLEX-AGENT(percept) returns an action
     action ← rule.ACTION
     return action
 ```
+![alt text](h2.12.png)
+
 **Hình 2.12** Một tác nhân phản xạ dựa trên mô hình. Nó theo dõi trạng thái hiện tại của thế giới, sử dụng một mô hình nội bộ. Sau đó, nó chọn một hành động giống như cách tác nhân phản xạ.
 
 Nó chịu trách nhiệm tạo ra mô tả trạng thái nội bộ mới. Chi tiết về cách các mô hình và trạng thái được biểu diễn rất khác nhau tùy thuộc vào loại môi trường và công nghệ cụ thể được sử dụng trong thiết kế tác nhân. Các ví dụ chi tiết về các mô hình và thuật toán cập nhật xuất hiện trong các Chương 4, 12, 11, 15, 17 và 25.
@@ -183,7 +191,8 @@ So với thế giới thực, vấn đề đồ chơi này có các vị trí r�
 
 **Câu đố 8 ô (8-puzzle)**, một ví dụ được hiển thị trong Hình 3.4 (xem bên dưới), bao gồm một bảng 3×3 với tám ô được đánh số và một khoảng trống. Một ô liền kề với khoảng trống có thể trượt vào khoảng trống đó. Mục tiêu là đạt được một trạng thái mục tiêu được chỉ định, chẳng hạn như trạng thái được hiển thị ở bên phải của hình. Công thức tiêu chuẩn như sau:
 
-*(Đánh dấu để bổ sung Hình 3.4: Một ví dụ điển hình của câu đố 8 ô.)*
+![alt text](h3.4.png)
+
 **Hình 3.4** Một ví dụ điển hình của câu đố 8 ô.
 *(Mô tả: Hai lưới 3x3. Lưới bên trái "Trạng thái bắt đầu (Start State)" có các số: hàng 1 [7, 2, 4], hàng 2 [5, trống, 6], hàng 3 [8, 3, 1]. Lưới bên phải "Trạng thái mục tiêu (Goal State)" có các số: hàng 1 [1, 2, trống], hàng 2 [3, 4, 5], hàng 3 [6, 7, 8].)*
 
@@ -202,7 +211,8 @@ Câu đố 8 ô thuộc họ **câu đố khối trượt (sliding-block puzzles
 
 Mục tiêu của **bài toán 8 quân hậu (8-queens problem)** là đặt tám quân hậu lên một bàn cờ sao cho không có quân hậu nào tấn công quân hậu nào khác. (Một quân hậu tấn công bất kỳ quân cờ nào trong cùng hàng, cột hoặc đường chéo.) Hình 3.5 (xem bên dưới) cho thấy một giải pháp thử nghiệm thất bại: quân hậu ở cột ngoài cùng bên phải bị quân hậu ở trên cùng bên trái tấn công.
 
-*(Đánh dấu để bổ sung Hình 3.5: Gần như là một giải pháp cho bài toán 8 quân hậu. (Giải pháp được để lại như một bài tập.))*
+![alt text](h3.5s.png)
+
 **Hình 3.5** Gần như là một giải pháp cho bài toán 8 quân hậu. (Giải pháp được để lại như một bài tập.)
 *(Mô tả: Một bàn cờ 8x8 với các quân hậu được đặt. Các vị trí quân hậu (hàng, cột, 1 là trên cùng/trái cùng): (1,2), (2,4), (3,6), (4,1), (5,3), (6,5), (7,7), (8,8). Quân hậu ở (1,2) tấn công quân hậu ở (8,8) theo đường chéo.)*
 

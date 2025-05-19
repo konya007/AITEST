@@ -293,7 +293,8 @@ Một khía cạnh then chốt của việc huấn luyện NN là vi phân tự 
 
 ---
 
-*(Đánh dấu để bổ sung Hình 3.1: Các giá trị trước và sau kích hoạt trong một nơ-ron.)*
+![alt text](hh3.1.png)
+
 **Hình 3.1.** Các giá trị trước và sau kích hoạt trong một nơ-ron.
 *(Mô tả: Hình ảnh cho thấy các đầu vào x1...xn được nhân với trọng số w1...wn, cộng với một bias b, đi qua một hàm tổng (Σ) để tạo ra z (giá trị tiền kích hoạt). Sau đó z đi qua hàm kích hoạt σ để tạo ra đầu ra a (giá trị hậu kích hoạt).)*
 
@@ -313,7 +314,8 @@ Việc chia nhỏ các tính toán của nơ-ron thành hai giá trị riêng bi
 
 ---
 
-*(Đánh dấu để bổ sung Hình 3.2: FFNN có một lớp đầu vào (4 nơ-ron), chỉ một lớp ẩn (3 nơ-ron) và một lớp đầu ra (1 nơ-ron).)*
+![alt text](hh3.2.png)
+
 **Hình 3.2.** FFNN có một lớp đầu vào (4 nơ-ron), chỉ một lớp ẩn (3 nơ-ron) và một lớp đầu ra (1 nơ-ron).
 *(Mô tả: Sơ đồ cho thấy 4 nơ-ron đầu vào a^(0) kết nối với 3 nơ-ron trong lớp ẩn (tạo ra a^(1)). Các nơ-ron lớp ẩn này sau đó kết nối với 1 nơ-ron trong lớp đầu ra (tạo ra a^(2)). Các trọng số (w) và độ lệch (b) được hiển thị cho các kết nối.)*
 
@@ -365,9 +367,12 @@ $$ \sigma_{\text{Tanh}}(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}. \quad (3.3) $$
 $$ \sigma_{\text{ReLU}}(z) = \max(z, 0). \quad (3.4) $$
 
 ---
+![alt text](hh3.3.png)
 
 *(Đánh dấu để bổ sung Hình 3.3: So sánh các AF phổ biến: Sigmoid, Tanh, ReLU, và ELU. Mỗi hàm thể hiện các đặc điểm riêng biệt cần thiết để định hình hành vi của các nơ-ron trong NN.)*
+
 **Hình 3.3.** So sánh các AF phổ biến: Sigmoid, Tanh, ReLU, và ELU. Mỗi hàm thể hiện các đặc điểm riêng biệt cần thiết để định hình hành vi của các nơ-ron trong NN.
+
 *(Mô tả: Bốn đồ thị hiển thị hình dạng của các hàm Sigmoid, Tanh, ReLU và ELU.)*
 
 Đơn vị Tuyến tính Lũy thừa (Exponential Linear Unit - ELU):
@@ -387,7 +392,12 @@ Việc lựa chọn AF là rất quan trọng và thường được hướng d�
 ---
 
 *(Đánh dấu để bổ sung Hình 3.4: Ký hiệu vô hướng và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra). Sơ đồ của một FFNN đơn giản với thông tin chảy từ trái sang phải. Các đầu vào $a_k^{(0)}$ được nhân với trọng số, cộng với độ lệch, và được chuyển qua hàm $\sigma$ để nhận các giá trị trung gian $z_k^{(1)}$. Các $z_k^{(1)}$ sau đó được kết hợp với một độ lệch và được đưa vào lớp tiếp theo.)*
+
+
+![alt text](hh3.4.png)
+
 **Hình 3.4.** Ký hiệu vô hướng và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra). Sơ đồ của một FFNN đơn giản với thông tin chảy từ trái sang phải. Các đầu vào $a_k^{(0)}$ được nhân với trọng số, cộng với độ lệch, và được chuyển qua hàm $\sigma$ để nhận các giá trị trung gian $z_k^{(1)}$. Các $z_k^{(1)}$ sau đó được kết hợp với một độ lệch và được đưa vào lớp tiếp theo.
+
 *(Mô tả: Sơ đồ chi tiết của một FFNN 4 lớp (1 đầu vào, 2 ẩn, 1 đầu ra) với các nơ-ron bias, các kết nối có trọng số (w) và các giá trị kích hoạt (a, z) tại mỗi lớp.)*
 
 **Mạng Nơ-ron Sâu (Deep Neural Networks)**
@@ -425,6 +435,9 @@ $$ \mathbf{a} = |\mathbf{a}\rangle = \sigma(\mathbf{z}) = \sigma(|\mathbf{z}\ran
 Do đó, người ta có thể biểu diễn các kiến trúc NN bằng các biến vectơ. Trong các biểu diễn dựa trên vectơ, thay vì biểu diễn các đơn vị riêng lẻ trong một lớp riêng biệt, toàn bộ lớp được coi là một vectơ được biểu diễn dưới dạng một hình chữ nhật. Việc sử dụng hình chữ nhật là một sự đơn giản hóa và trừu tượng hóa để truyền đạt ý tưởng về một lớp có nhiều đơn vị mà không cần vẽ tường minh các vòng tròn hoặc hình vuông riêng lẻ cho mỗi đơn vị, điều này có thể trở nên không thực tế và lộn xộn đối với các mạng lớn. Điều này có thể làm cho các phép toán và biểu thức toán học thuận tiện hơn. Ví dụ, sơ đồ kiến trúc trong Hình 3.4 (với các đơn vị vô hướng) đã được chuyển đổi thành một kiến trúc dựa trên vectơ trong Hình 3.5.
 
 *(Đánh dấu để bổ sung Hình 3.5: Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra).)*
+
+![alt text](hh3.5.png)
+
 **Hình 3.5.** Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra).
 *(Mô tả: Sơ đồ tương tự Hình 3.4 nhưng sử dụng ký hiệu vectơ cho các đầu vào (a^(0)), trọng số (W^(1)), các giá trị tiền kích hoạt (z^(1)), và các giá trị hậu kích hoạt (a^(1)) tại mỗi lớp. Các lớp được biểu diễn bằng các khối hình chữ nhật.)*
 
@@ -515,6 +528,9 @@ $$ \tilde{\mathbf{a}}^{(l)} = \begin{pmatrix} 1 \\ a_1^{(l)} \\ a_2^{(l)} \\ \vd
 ---
 
 *(Đánh dấu để bổ sung Hình 3.8: Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra.) (không có thuật ngữ độ lệch trong trường hợp $\sigma(1) \neq 1$))*
+
+![alt text](hh3.8.png)
+
 **Hình 3.8.** Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra.) (không có thuật ngữ độ lệch trong trường hợp $\sigma(1) \neq 1$)
 *(Mô tả: Sơ đồ tương tự Hình 3.5, nhưng các vectơ kích hoạt đầu vào cho mỗi lớp (ví dụ: $\tilde{\mathbf{a}}^{(0)}$) có một thành phần '1' được thêm vào ở đầu để xử lý độ lệch thông qua ma trận trọng số tăng cường $\tilde{\mathbf{W}}^{(1)}$. Kích thước ma trận được hiển thị, ví dụ: $\tilde{\mathbf{a}}^{(0)}$ là (5x1), $\tilde{\mathbf{W}}^{(1)}$ là (3x5).)*
 
@@ -538,6 +554,9 @@ $\tilde{\mathbf{W}}^{(l)}$ là ma trận trọng số $n_l \times (n_{l-1}+1)$ c
 ---
 
 *(Đánh dấu để bổ sung Hình 3.9: Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra.) (không có thuật ngữ độ lệch trong trường hợp $\sigma(1) = 1$))*
+
+![alt text](hh3.9.png)
+
 **Hình 3.9.** Ký hiệu vectơ và kiến trúc (kiến trúc cơ bản của một FFNN với lớp đầu vào, ba lớp ẩn và lớp đầu ra.) (không có thuật ngữ độ lệch trong trường hợp $\sigma(1) = 1$)
 *(Mô tả: Tương tự như Hình 3.8, nhưng nhấn mạnh trường hợp $\sigma(1)=1$. Ký hiệu $\bar{\mathbf{W}}^{(l)}$ được sử dụng cho ma trận trọng số bao gồm cột độ lệch.)*
 
