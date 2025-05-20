@@ -1,8 +1,4 @@
-Tuyệt vời, đây là bản dịch và trình bày Markdown cho tài liệu "DEEP LEARNING AND NEURAL NET 2", được rút ngắn để tập trung vào nội dung chính:
-
 # HỌC SÂU VÀ MẠNG NƠ-RON 2 (DEEP LEARNING AND NEURAL NET 2)
-MINH QUANG LE
-
 ---
 
 ## 3.4 Vi Phân Tự Động và Các Chế Độ Chính Của Nó (Automatic Differentiation and Its Main Modes)
@@ -85,6 +81,8 @@ Các bước của chế độ tiến:
 
 Ở phía bên trái của **Bảng 3.1** chúng ta thấy biểu diễn của phép tính $y = f(x_1, x_2) = \ln(x_1) + x_1 x_2 - \sin(x_2)$ dưới dạng một dấu vết đánh giá của các phép toán cơ bản—còn được gọi là danh sách Wengert và được biểu diễn đồ họa trong **Hình 3.13**. Để tính đạo hàm của $f$ đối với $x_1$, chúng ta bắt đầu bằng cách liên kết với mỗi biến trung gian $v_i$ một đạo hàm $\dot{v}_i = \frac{\partial v_i}{\partial x_1}$. Áp dụng quy tắc chuỗi cho mỗi phép toán cơ bản trong dấu vết nguyên thủy tiến, chúng ta tạo ra dấu vết tiếp tuyến (đạo hàm) tương ứng, được đưa ra ở phía bên phải trong **Bảng 3.1**.
 
+![alt text](hh3.13.png)
+
 *(Đánh dấu để bổ sung Hình 3.13: Ví dụ về tích lũy tiến với đồ thị tính toán của y = f(x1, x2) = ln(x1) + x1x2 - sin(x2).)*
 **Hình 3.13.** Ví dụ về tích lũy tiến với đồ thị tính toán của $y = f(x_1, x_2) = \ln(x_1) + x_1x_2 - \sin(x_2)$. Việc lựa chọn biến độc lập mà theo đó phép vi phân được thực hiện ảnh hưởng đến các giá trị mầm $\dot{v}_{-1}$ và $\dot{v}_0$. Quan tâm đến đạo hàm của hàm này đối với $x_1$, các giá trị mầm phải được đặt thành: $\dot{v}_{-1} = \dot{x}_1 = 1, \dot{v}_0 = \dot{x}_2 = 0$.
 *(Mô tả: Đồ thị tính toán cho thấy các đầu vào x1, x2 đi qua các phép toán trung gian v-1, v0, v1, v2, v3, v4, v5 để tạo ra đầu ra cuối cùng f(x1, x2). Các mũi tên chỉ hướng tiến. Các công thức tính đạo hàm riêng (ví dụ: $\dot{v}_1 = \partial v_1 / \partial x_1$) được hiển thị dọc theo các cạnh.)*
@@ -107,6 +105,9 @@ Các bước của chế độ tiến:
 **Ví dụ về Chế độ Ngược (Example of Reverse Mode)**
 
 Quay lại ví dụ $y = f(x_1, x_2) = \ln(x_1) + x_1 x_2 - \sin(x_2)$, xem **Hình 3.14**. Trong **Bảng 3.2**, chúng ta thấy các câu lệnh phụ trợ ở phía bên phải, và phép toán cơ bản ban đầu ở phía bên trái. Nói một cách đơn giản, chúng ta quan tâm đến việc tính toán sự đóng góp $\bar{v}_i = \frac{\partial y}{\partial v_i}$ của sự thay đổi trong mỗi biến $v_i$ vào sự thay đổi trong đầu ra $y$. Sau lượt tiến ở phía bên trái, chúng ta chạy lượt ngược của các phụ trợ ở phía bên phải, bắt đầu với $\bar{v}_5 = \bar{y} = \frac{\partial y}{\partial y} = 1$. Cuối cùng, chúng ta nhận được các đạo hàm $\frac{\partial y}{\partial x_1} = \bar{x}_1$ và $\frac{\partial y}{\partial x_2} = \bar{x}_2$ chỉ trong một lượt ngược.
+
+
+![alt text](hh3.14.png)
 
 *(Đánh dấu để bổ sung Hình 3.14: Ví dụ về tích lũy ngược với đồ thị tính toán của y = f(x1, x2) = ln(x1) + x1x2 - sin(x2).)*
 **Hình 3.14.** Ví dụ về tích lũy ngược với đồ thị tính toán của $y = f(x_1, x_2) = \ln(x_1) + x_1x_2 - \sin(x_2)$. Tích lũy ngược đánh giá hàm trước và tính toán các đạo hàm đối với tất cả các biến độc lập trong một lượt bổ sung. Phụ trợ, $\bar{v}_i$, là đạo hàm của một biến phụ thuộc đối với một biểu thức con $\bar{v}_i = \frac{\partial y}{\partial v_i}$.
@@ -209,6 +210,8 @@ Bằng cách học các tham số tối ưu, NN có thể nắm bắt các mẫu
 
 **Ví dụ 3.1**
 Chúng ta hãy định nghĩa một NN đơn giản, chấp nhận hai giá trị đầu vào, có hai nút trong lớp ẩn của nó, và có một nút đầu ra duy nhất, như được hiển thị trong **Hình 3.15**. Chúng ta sẽ sử dụng AF Sigmoid $\sigma(z) = \frac{1}{1+e^{-z}}$ trong lớp ẩn. Lưu ý rằng đầu ra có AF đồng nhất $\sigma(z)=z$. Để huấn luyện mạng, chúng ta sẽ sử dụng hàm mất mát sai số bình phương, $L_{MSE} = \frac{1}{2}(y-a_2^{(2)})^2$, trong đó $y$ là giá trị thực tế và $a_1^{(2)}$ là giá trị dự đoán của mạng cho đầu vào liên quan đến $y$, cụ thể là $a_1^{(0)}$ và $a_2^{(0)}$.
+
+![alt text](hh3.15.png)
 
 *(Đánh dấu để bổ sung Hình 3.15: Một NN đơn giản.)*
 **Hình 3.15.** Một NN đơn giản.
@@ -314,6 +317,8 @@ Nói cách khác, NN được thiết kế để trở thành một thuật toá
 
 Trực giác cơ bản đằng sau FBGD có thể được minh họa bằng một kịch bản giả định. Một người bị mắc kẹt trên núi và đang cố gắng đi xuống để tìm cực tiểu toàn cục. Sương mù dày đặc đến mức tầm nhìn cực kỳ thấp. Do đó, không thể nhìn thấy con đường xuống núi, vì vậy anh ta phải sử dụng thông tin cục bộ để tìm cực tiểu. Anh ta có thể sử dụng phương pháp FBGD, bao gồm việc nhìn vào độ dốc của ngọn đồi ở vị trí hiện tại của mình, và sau đó tiến hành theo hướng dốc nhất (tức là, xuống dốc).
 
+![alt text](hh3.17.png)
+
 *(Đánh dấu để bổ sung Hình 3.17: FBGD nhạy cảm với các điểm yên ngựa có thể dẫn đến hội tụ sớm.)*
 **Hình 3.17.** FBGD nhạy cảm với các điểm yên ngựa có thể dẫn đến hội tụ sớm.
 *(Mô tả: Đồ thị cho thấy hàm mất mát L theo trọng số w1. Hàm có một cực tiểu cục bộ và một điểm yên ngựa. Các mũi tên chỉ ra đường đi của FBGD, có thể bị kẹt ở điểm yên ngựa.)*
@@ -362,6 +367,8 @@ Những ưu điểm chính của SGD là nó nhanh và hiệu quả về bộ nh
 *   Vì mỗi gradient được tính toán dựa trên một ví dụ huấn luyện duy nhất, bề mặt lỗi nhiễu hơn trong FBGD, điều này cũng có thể có lợi thế là SGD có thể thoát khỏi các cực tiểu cục bộ nông dễ dàng hơn. Cách tiếp cận SGD được minh họa bằng **Hình 3.18**, trong đó thay vì một bề mặt lỗi tĩnh, bề mặt lỗi của chúng ta là động. Kết quả là, việc đi xuống trên bề mặt ngẫu nhiên này cải thiện đáng kể khả năng điều hướng các vùng phẳng của chúng ta.
 *   Trong thuật toán SGD, thứ tự cập nhật trọng số có thể quan trọng, đó là lý do tại sao thuật toán bao gồm một đề xuất về việc ngẫu nhiên hóa thứ tự của các vectơ đầu vào ở mỗi lần lặp (đó là lý do tại sao chúng ta muốn xáo trộn tập huấn luyện cho mỗi epoch để ngăn chặn các chu kỳ). Điều này có thể cải thiện đáng kể tốc độ mà thuật toán học.
 *   Trong các triển khai SGD, tốc độ học cố định $\alpha$ thường được thay thế bằng một tốc độ học thích ứng giảm dần theo thời gian.
+
+![alt text](hh3.18.png)
 
 *(Đánh dấu để bổ sung Hình 3.18: Bề mặt lỗi SGD dao động đối với bề mặt lỗi batch, cho phép tránh điểm yên ngựa.)*
 **Hình 3.18.** Bề mặt lỗi SGD dao động đối với bề mặt lỗi batch, cho phép tránh điểm yên ngựa.
@@ -423,6 +430,8 @@ trong đó các tổng là trên tất cả các ví dụ huấn luyện $\mathb
 *   Tần suất cập nhật mô hình cao hơn FBGD nhưng thấp hơn SGD, cho phép hội tụ mạnh mẽ hơn.
 *   Số lượng cập nhật tham số mỗi epoch giảm khi tăng kích thước mini-batch.
 *   MBSGD, với việc lựa chọn kích thước batch phù hợp, có được những lợi ích của cả hai phương pháp: tốc độ và khả năng tránh cực tiểu cục bộ của SGD và sự ổn định của FBGD.
+
+![alt text](hh3.19.png)
 
 *(Đánh dấu để bổ sung Hình 3.19: So sánh các thuật toán SGD, MBSGD và FBGD dựa trên kích thước batch.)*
 **Hình 3.19.** So sánh các thuật toán SGD, MBSGD và FBGD dựa trên kích thước batch.
@@ -503,3 +512,5 @@ $$ \bar{\mathbf{b}} = \sum_{i=1}^L \left( \left( \prod_{j=i+1}^{L+1} \mathbf{W}^
 Cuối cùng, chúng ta có thể biểu diễn điều này dưới dạng một NN một lớp:
 $$ \mathbf{O} = \bar{\mathbf{W}} \cdot \mathbf{x} + \bar{\mathbf{b}}. $$
 Vì vậy, việc chỉ sử dụng AF đồng nhất trong tất cả các lớp sẽ thu gọn toàn bộ NN thành một NN một lớp với một ma trận trọng số và vectơ độ lệch kết hợp.
+
+*Được Việt hoá từ tài liệu của TS. Lê Quang Minh cung cấp.*

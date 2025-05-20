@@ -1,5 +1,4 @@
 # TRÍ TUỆ NHÂN TẠO
-
 ---
 
 ## GIỚI THIỆU
@@ -189,3 +188,6 @@ Tiếp theo, môi trường lái xe mà chiếc taxi sẽ phải đối mặt l�
 Các bộ truyền động cho một chiếc taxi tự động bao gồm những bộ phận có sẵn cho một người lái xe: điều khiển động cơ thông qua chân ga và điều khiển việc lái và phanh. Ngoài ra, nó sẽ cần đầu ra cho màn hình hiển thị hoặc bộ tổng hợp giọng nói để nói chuyện lại với hành khách, và có lẽ một cách nào đó để giao tiếp với các phương tiện khác, một cách lịch sự hoặc theo cách khác.
 
 Các cảm biến cơ bản cho chiếc taxi sẽ bao gồm một hoặc nhiều camera video có thể điều khiển để nó có thể nhìn thấy đường; nó có thể tăng cường chúng bằng các cảm biến hồng ngoại hoặc sonar để phát hiện khoảng cách đến các xe khác và chướng ngại vật. Để tránh bị phạt vì chạy quá tốc độ, chiếc taxi nên có đồng hồ tốc độ, và để điều khiển xe đúng cách, đặc biệt là ở những đoạn cua, nó nên có gia tốc kế. Để xác định trạng thái cơ học của xe, nó sẽ cần dãy cảm biến động cơ, nhiên liệu và hệ thống điện thông thường. Giống như nhiều người lái xe, nó có thể muốn một hệ thống định vị toàn cầu (GPS) để không bị lạc. Cuối cùng, nó sẽ cần một bàn phím hoặc micrô để hành khách yêu cầu điểm đến.
+
+<!-- Kết thúc -->
+*Được Việt hoá từ tài liệu của TS. Lê Quang Minh cung cấp.*

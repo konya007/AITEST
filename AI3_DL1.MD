@@ -1,6 +1,4 @@
-
 # HỌC SÂU VÀ MẠNG NƠ-RON (DEEP LEARNING AND NEURAL NETWORKS)
-MINH QUANG LE
 
 ---
 
@@ -621,3 +619,5 @@ Xem NN như một đồ thị tính toán là một sự trừu tượng hóa h�
 *   Đồ thị không chu trình có nghĩa là không có chu trình hoặc vòng lặp trong đồ thị. Nói cách khác, bạn không thể bắt đầu tại một nút và theo một chuỗi các cạnh để quay lại cùng một nút đó.
 *   Mỗi nút trong đồ thị chứa một biến. Biến này có thể biểu thị các đại lượng hoặc dữ liệu khác nhau, tùy thuộc vào ngữ cảnh của đồ thị tính toán.
 *   Đối với các nút đầu vào không có cạnh đến, các biến được cố định bên ngoài. Điều này có nghĩa là các giá trị của các biến này được cung cấp từ một nguồn bên ngoài thay vì được tính toán trong đồ thị.
+
+*Được Việt hoá từ tài liệu của TS. Lê Quang Minh cung cấp.*

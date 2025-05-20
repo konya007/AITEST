@@ -1,7 +1,4 @@
-
 # TRÍ TUỆ NHÂN TẠO 2
-LE QUANG MINH
-
 ---
 
 ## KHÁI NIỆM VỀ TÍNH HỢP LÝ (THE CONCEPT OF RATIONALITY)
@@ -273,3 +270,5 @@ Một **vấn đề bố trí VLSI (VLSI layout problem)** đòi hỏi phải đ
 Sau khi xây dựng một số vấn đề, bây giờ chúng ta cần giải quyết chúng. Một giải pháp là một chuỗi hành động, vì vậy các thuật toán tìm kiếm hoạt động bằng cách xem xét các chuỗi hành động có thể có khác nhau. Các chuỗi hành động có thể có bắt đầu từ trạng thái ban đầu tạo thành một **cây tìm kiếm (search tree)** với trạng thái ban đầu ở gốc; các nhánh là hành động và các **nút (nodes)** tương ứng với các trạng thái trong không gian trạng thái của vấn đề. Hình 3.6 (không được cung cấp trong OCR) cho thấy một vài bước đầu tiên trong việc phát triển cây tìm kiếm để tìm một tuyến đường từ Arad đến Bucharest. Nút gốc của cây tương ứng với trạng thái ban đầu, *ĐangỞ(Arad)*. Bước đầu tiên là kiểm tra xem đây có phải là trạng thái mục tiêu hay không. (Rõ ràng là không, nhưng điều quan trọng là phải kiểm tra để chúng ta có thể giải quyết các vấn đề mẹo như "bắt đầu ở Arad, đến Arad.") Sau đó, chúng ta cần xem xét việc thực hiện các hành động khác nhau. Chúng ta làm điều này bằng cách **mở rộng (expanding)** trạng thái hiện tại; nghĩa là, áp dụng từng hành động hợp pháp cho trạng thái hiện tại, do đó tạo ra một tập hợp các trạng thái mới. Trong trường hợp này, chúng ta thêm ba nhánh từ nút cha *ĐangỞ(Arad)* dẫn đến ba nút con mới: *ĐangỞ(Sibiu)*, *ĐangỞ(Timisoara)*, và *ĐangỞ(Zerind)*. Bây giờ chúng ta phải chọn một trong ba khả năng này để xem xét thêm.
 
 Đây là bản chất của tìm kiếm—theo dõi một tùy chọn ngay bây giờ và đặt các tùy chọn khác sang một bên để sử dụng sau, trong trường hợp lựa chọn đầu tiên không dẫn đến giải pháp. Giả sử chúng ta chọn Sibiu trước. Chúng ta kiểm tra xem đó có phải là trạng thái mục tiêu hay không (không phải) và sau đó mở rộng nó để nhận được *ĐangỞ(Arad)*, *ĐangỞ(Fagaras)*, *ĐangỞ(Oradea)*, và *ĐangỞ(RimnicuVilcea)*. Sau đó, chúng ta có thể chọn bất kỳ một trong bốn nút này hoặc quay lại và chọn Timisoara hoặc Zerind. Mỗi trong số sáu nút này là một **nút lá (leaf node)**, nghĩa là một nút không có con trong cây. Tập hợp tất cả các nút lá có sẵn để mở rộng tại bất kỳ thời điểm nào được gọi là **biên giới (frontier)**. (Nhiều tác giả gọi nó là *danh sách mở (open list)*, vừa kém gợi hình về mặt địa lý vừa kém chính xác hơn, bởi vì các cấu trúc dữ liệu khác phù hợp hơn danh sách.) Trong Hình 3.6, biên giới của mỗi cây bao gồm các nút có đường viền đậm.
+
+*Được Việt hoá từ tài liệu của TS. Lê Quang Minh cung cấp.*
